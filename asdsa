@@ -1,0 +1,10 @@
+Caused by: java.lang.NullPointerException: Cannot invoke "org.bukkit.scoreboard.ScoreboardManager.getMainScoreboard()" because the return value of "org.bukkit.Server.getScoreboardManager()" is null
+	at com.secondchance.SecondChance.<init>(SecondChance.java:18) ~[SecondChance-1.0-shaded.jar:?]
+	at jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?]
+	at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?]
+	at java.lang.reflect.ReflectAccess.newInstance(ReflectAccess.java:79) ~[?:?]
+	at jdk.internal.reflect.ReflectionFactory.newInstance(ReflectionFactory.java:194) ~[?:?]
+	at java.lang.Class.newInstance(Class.java:711) ~[?:?]
+	at org.bukkit.plugin.java.PluginClassLoader.<init>(PluginClassLoader.java:88) ~[paper-api-1.19.3-R0.1-SNAPSHOT.jar:?]
+	at io.papermc.paper.plugin.provider.type.spigot.SpigotPluginProvider.createInstance(SpigotPluginProvider.java:123) ~[paper-1.19.3.jar:git-Paper-448]
+	... 9 more

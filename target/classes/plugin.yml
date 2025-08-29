@@ -1,0 +1,15 @@
+name: SecondChance
+version: '1.0'
+main: com.secondchance.SecondChance
+api-version: '1.19'
+
+commands:
+  SecondChance:
+    description: Set/Show value for SecondChance
+    usage: /<command> [<false|true>]
+  SecondChanceMessage:
+    description: Set/Show message for SecondChance
+    usage: /<command> [message]
+  Alive:
+    description: Make player alive
+    usage: /<command> [player]
