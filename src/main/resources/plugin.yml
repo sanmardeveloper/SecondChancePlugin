@@ -5,11 +5,11 @@ api-version: '1.19'
 
 commands:
   SecondChance:
-    description: Set/Show value for SecondChance
+    description: On/Off Second Chance
     usage: /<command> [<false|true>]
   SecondChanceMessage:
-    description: Set/Show message for SecondChance
+    description: Set/Show message for Second Chance
     usage: /<command> [message]
-  Alive:
-    description: Make player alive
+  GiveSecondChance:
+    description: Give a Second Chance for player
     usage: /<command> [player]

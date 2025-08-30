@@ -1,11 +1,17 @@
 package com.secondchance;
 
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -25,9 +31,9 @@ public final class SecondChance extends JavaPlugin implements Listener {
 
         main = getServer().getScoreboardManager().getMainScoreboard();
 
-        Team team = main.getTeam("alive");
+        Team team = main.getTeam("secondChance");
         if (team == null) {
-            main.registerNewTeam("alive");
+            main.registerNewTeam("secondChance");
         }
     }
 
@@ -47,9 +53,29 @@ public final class SecondChance extends JavaPlugin implements Listener {
                         && team.getName().equalsIgnoreCase("alive")) {
                     event.setCancelled(true);
                     player.setHealth(1);
+                    player.playSound(
+                            player.getLocation(), // где слышно звук
+                            Sound.ITEM_TOTEM_USE, // тип звука
+                            1.3f, // громкость
+                            1.0f  // высота тона (pitch)
+                    );
                     Objects.requireNonNull(main.getTeam("alive")).removePlayer(player);
                     player.sendActionBar(Objects.requireNonNull(getConfig().getString("secondChanceMessage")));
                 }
+            }
+        }
+    }
+
+
+
+    @EventHandler
+    public void OnPlayerRMB(PlayerInteractEvent event) {
+        if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING
+                && (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            if (!main.getTeam("secondChance").hasPlayer(event.getPlayer())) {
+                Objects.requireNonNull(main.getTeam("secondChance")).addPlayer(event.getPlayer());
+                event.getPlayer().getInventory().setItemInMainHand(null);
+                event.getPlayer().sendActionBar("You've just given yourself a second chance!");
             }
         }
     }
@@ -82,23 +108,23 @@ public final class SecondChance extends JavaPlugin implements Listener {
                 saveConfig();
             }
             return true;
-        } else if (command.getName().equalsIgnoreCase("alive")) {
+        } else if (command.getName().equalsIgnoreCase("givesecondchance")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("This command can only be used by a player!");
                 return true;
             }
             if (args.length == 0) {
-                Objects.requireNonNull(main.getTeam("alive")).addPlayer((Player) sender);
-                sender.sendMessage("You are alive!");
+                Objects.requireNonNull(main.getTeam("secondChance")).addPlayer((Player) sender);
+                sender.sendMessage("You've just given yourself a second chance!");
             } else if (args.length == 1) {
                 try {
-                    Objects.requireNonNull(main.getTeam("alive")).addPlayer(getServer().getPlayer(args[0]));
+                    Objects.requireNonNull(main.getTeam("secondChance")).addPlayer(getServer().getPlayer(args[0]));
                     sender.sendMessage(getServer().getPlayer(args[0]).getName() + " is alive!");
                 } catch (IllegalArgumentException e) {
                     getLogger().warning(String.valueOf(e));
                 }
             } else {
-                sender.sendMessage("Usage: /alive [player]");
+                sender.sendMessage("Usage: /givesecondchance [player]");
             }
 
             return true;
