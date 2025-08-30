@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -77,7 +78,7 @@ public final class SecondChance extends JavaPlugin implements Listener {
 
                     //Effects
                     player.setAbsorptionAmount(4);
-                    PotionEffect fireResistence = new PotionEffect(PotionType.FIRE_RESISTANCE.getEffectType(), 10, 0, false, false);
+                    PotionEffect fireResistence = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 200, 1, true, false);
                     player.addPotionEffect(fireResistence);
 
                     //Send a Message
