@@ -50,7 +50,7 @@ public final class SecondChance extends JavaPlugin implements Listener {
                 Team team = player.getScoreboard().getEntryTeam(player.getName());
                 if (getConfig().getBoolean("secondChance")
                         && team != null
-                        && team.getName().equalsIgnoreCase("alive")) {
+                        && team.getName().equalsIgnoreCase("secondChance")) {
                     event.setCancelled(true);
                     player.setHealth(1);
                     player.playSound(
@@ -59,8 +59,9 @@ public final class SecondChance extends JavaPlugin implements Listener {
                             1.3f, // громкость
                             1.0f  // высота тона (pitch)
                     );
-                    Objects.requireNonNull(main.getTeam("alive")).removePlayer(player);
-                    player.sendActionBar(Objects.requireNonNull(getConfig().getString("secondChanceMessage")));
+                    Objects.requireNonNull(main.getTeam("secondChance")).removePlayer(player);
+                    String a = String.valueOf('"');
+                    player.sendActionBar(Objects.requireNonNull(getConfig().getString(("secondChanceMessage").replaceAll(a, ""))));
                 }
             }
         }
